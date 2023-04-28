@@ -27,10 +27,36 @@ def bubblesort(arr):
         for j in range(len(arr)-i-1):
             if arr[j]>arr[j+1]:
                 arr[j],arr[j+1]=arr[j+1],arr[j]
-
-temparr=read_array_from_file(PATH_100000)   
+def combsort(arr):
+    step=len(arr)
+    swap=True
+    while swap or step > 1:
+        step=int(step/1.247)
+        swap=False
+        for i in range(len(arr)-step):
+            j=i+step
+            if arr[i]>arr[j]:
+                arr[i],arr[j]=arr[j],arr[i]
+                swap=True
+def quicksort(arr):
+    if len(arr)<=1:
+      return arr
+    else :
+      q=sum(arr)//len(arr)
+      l=[]
+      m=[]
+      h=[]
+      for i in arr:
+          if i < q:
+              l.append(i)
+          elif i>q:
+              h.append(i)
+          else:
+              m.append(i)
+      return quicksort(l)+m+quicksort(h) 
+temparr=read_array_from_file(PATH_1000000)   
 stime=time.time()
-bubblesort(temparr)
+quicksort(temparr)
 ftime=time.time()
 fftime=ftime-stime
-writeresult(PATH_RESULT,f'bubblesort100000 {fftime}')
+writeresult(PATH_RESULT,f'quicksort1000000 {fftime}')
