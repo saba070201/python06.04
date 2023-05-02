@@ -1,6 +1,6 @@
 import random
 from abc import ABC,abstractmethod
-
+import math
 
 class Hero(ABC):
     @abstractmethod
@@ -8,13 +8,20 @@ class Hero(ABC):
         pass
     
 
+class Sword:
+    def __init__(self,name,attack):
+        self.name=name
+        self.attack=attack
+
+
 class Warior(Hero):
-    def __init__(self,name,hp,attack):
+    def __init__(self,name,hp,attack,sword):
         self.name=name
         self.hp=hp
         self.attack=attack
+        self.sword=sword
     def beat(self,other:'Warior'):
-        other.hp-=self.attack
+        other.hp-=(self.attack+self.sword.attack)
 
 class Archer(Hero):
     def __init__(self,name,hp,attack,chance):
@@ -52,6 +59,6 @@ class Batle:
               print(f'{p2.name} бьет {p2.attack} {p1.hp}')
 
 
-w1=Warior('Artes',1000,10)
-w2=Archer('Silvana',500,10,50)
+w1=Warior('Artes',1000,10,Sword('frostmorn',10))
+w2=Warior('Silvana',500,20,Sword('?',20))
 Batle.batle(w1,w2)
