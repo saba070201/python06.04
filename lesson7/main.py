@@ -1,15 +1,37 @@
-# class Person:
-#     name=''
-#     age=0
-#     def go(self):
-#       print('go')
-# p1=Person()
-# p1.name='Misha'
-# p1.age=22
-# p2=Person()
-# p2.name='Daniil'
-# p2.age=24
-# print(p1.name,p1.age)
-# print(p2.name,p2.age)
-# p1.go()
-# p2.go()
+class Car:
+    def __init__(self,wheels,price,engine,body):
+       
+
+        self.price=price
+        self.wheels=wheels
+        self.engine=engine
+        self.body=body
+    
+
+class Wheel:
+    def __init__(self,d,disk,tire):
+        self.d=d
+        self.disk=disk
+        self.tire=tire
+
+
+class Engine:
+    def __init__(self,power) :
+        self.power=power
+
+
+class Disk:
+    def __init__(self,title) :
+        self.title=title
+
+
+class Tire:
+    def __init__(self,title):
+        self.title=title
+
+# car=Car([Wheel(15,Disk('d1'),Tire('t1')),Wheel(15,Disk('d1'),Tire('t1')),Wheel(15,Disk('d1'),Tire('t1')),Wheel(15,Disk('d1'),Tire('t1')),],1000,Engine(300))
+wheel=Wheel(15,Disk('d1'),Tire('summer'))
+engine=Engine(300)
+car=Car([wheel,wheel,wheel,wheel],10000,engine,'body')
+print(car.wheels[0].tire.title)
+
