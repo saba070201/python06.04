@@ -35,4 +35,4 @@ for k in range(N):
 # нумерацця вершин начинается с нуля
 start = 1
 end = 4
-print(get_path(P, end, start))
+print(get_path(P, start, end))
