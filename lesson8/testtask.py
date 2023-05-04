@@ -13,17 +13,25 @@ class RomanValueError(Exception):
 class Conventer:
     @staticmethod
     def from_arab_to_rome(value):
+        
         return RomanNum(value)
     @staticmethod
     def from_rome_to_arab(value):
-        
-        return int(value)
+        ms=Matches()
+        temparr=[]
+        for i in value:
+            temparr.append(ms.matches.inverse[i])
+        i=len(temparr)-1
+        while i!=0:
+            if temparr[i]>temparr[i-1]:
+                temparr[i-1]=-temparr[i-1]
+            i=i-1
+        return int(sum(temparr))
     
 
 class RomanNum:
     def __init__(self,romanvalue):
-        self.choises=['I','V','X','L','C','M']
         self.romanvalue=romanvalue
-        
-m=Matches()
-print(m.matches[5])
+    def __str__(self):
+        return self.romanvalue
+print(Conventer.from_rome_to_arab('XCIX'))
