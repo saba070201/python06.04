@@ -34,7 +34,7 @@ class Conventer:
             elif str_arabic[i] in ['9']:
                 result = romans[romans_pointer] + romans[romans_pointer + 2] + result
             romans_pointer += 2
-        return RomanNum(result)
+        return result
     
 
     @staticmethod
@@ -65,10 +65,20 @@ class RomanNum:
             self.romanvalue=Conventer.from_arab_to_rome(value)
         elif isinstance(value,str):
             try:
-              assert(self.check(value),RomanValueError('Такого числа не существует'))
-            except:
-                pass
-                
-            self.arabicvalue=Conventer.from_rome_to_arab(value)
+              assert self.check(value)
+            except RomanValueError('такого числа не существует') as e:
+              print(e)
+            else:
+              self.arabicvalue=Conventer.from_rome_to_arab(value)
+              self.romanvalue=value
     def __str__(self):
-        return self.value
+        return str(self.romanvalue)+'!'+str(self.arabicvalue)
+    def __add__(self,other):
+        if isinstance(other,RomanNum):
+            return RomanNum(self.arabicvalue+other.arabicvalue)
+        elif isinstance(other,int):
+            return self.arabicvalue+other
+    
+r=RomanNum('X')+10
+r=RomanNum(r)
+print(r)
