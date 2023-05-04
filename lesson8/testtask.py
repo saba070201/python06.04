@@ -4,17 +4,39 @@ from bidict import bidict
 class Matches:
     matches=bidict({1:'I',5:'V',10:'X',50:'L',100:'C'})
 
+
 class RomanValueError(Exception):
     def __init__(self,message):
         self.message=message
     def __str__(self):
         return self.message
     
+
 class Conventer:
     @staticmethod
     def from_arab_to_rome(value):
-        
-        return RomanNum(value)
+        value=str(value)
+        value=[i for i in value]
+        ms=Matches()
+        romans = list([ i for i in ms.matches.inverse])
+     
+        str_arabic = value[::-1]
+        str_arabic_len = len(str_arabic)
+        result = str()
+        romans_pointer = 0
+        for i in range(str_arabic_len):
+            if str_arabic[i] in ['0', '1', '2', '3']:
+                result = romans[romans_pointer] * int(str_arabic[i]) + result
+            elif str_arabic[i] in ['4']:
+                result = romans[romans_pointer] + romans[romans_pointer + 1] + result
+            elif str_arabic[i] in ['5', '6', '7', '8']:
+                result = romans[romans_pointer + 1] + romans[romans_pointer] * (int(str_arabic[i]) - 5) + result
+            elif str_arabic[i] in ['9']:
+                result = romans[romans_pointer] + romans[romans_pointer + 2] + result
+            romans_pointer += 2
+        return RomanNum(result)
+    
+
     @staticmethod
     def from_rome_to_arab(value):
         ms=Matches()
@@ -30,8 +52,23 @@ class Conventer:
     
 
 class RomanNum:
-    def __init__(self,romanvalue):
-        self.romanvalue=romanvalue
+    def check(self,checkvalue):
+        m=Matches()
+        matches=[i for i in m.matches.inverse ]
+        for i in checkvalue:
+            if i not in matches:
+                return False
+        return True
+    def __init__(self,value):
+        if isinstance(value,int):
+            self.arabicvalue=value
+            self.romanvalue=Conventer.from_arab_to_rome(value)
+        elif isinstance(value,str):
+            try:
+              assert(self.check(value),RomanValueError('Такого числа не существует'))
+            except:
+                pass
+                
+            self.arabicvalue=Conventer.from_rome_to_arab(value)
     def __str__(self):
-        return self.romanvalue
-print(Conventer.from_rome_to_arab('XCIX'))
+        return self.value
