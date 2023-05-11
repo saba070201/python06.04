@@ -19,7 +19,7 @@ async def source1(dates):
     values=[]
     async with aiohttp.ClientSession() as session:
         for i in dates:
-          async with session.get(f'https://www.cbr.ru/scripts/XML_daily.asp?date_req={i}') as response:
+          async with session.get(f'https://www.cbr.ru/scripts/XML_daily.asp?date_req={i}',verify=False) as response:
                 result= await response.text()
                 root=et.fromstring(result)
                 for j in root.findall('Valute'):
