@@ -10,3 +10,4 @@ class User(Model):
 
 for i in User.select().where(User.name=='misha1'):
     print(i.name)
+# comment
