@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 {% block main %}
-<form action="" method="POST">
-  <input type="text" value="{{ note_data.title }}">
-<textarea name="" id="" cols="30" rows="10">
+<form action="{{url_for('change_note',note_id=note_data.id )}}" method="POST">
+  <input type="text" name="title_data" value="{{ note_data.title }}" >
+<textarea  name="memo_data" id="" cols="30" rows="10">
   {{ note_data.memo }}
 </textarea>
 <input type="checkbox">
 <button type="submit">изменить</button>
 </form>
-{{ note_data.id }}
-{{ note_data.title }}
+
 
 {% endblock %}

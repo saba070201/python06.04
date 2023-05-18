@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% block main %}
+<a href="{{url_for('create_note')}}">создать заметку</a>
 {% for i in data %}
 <h3>
   <a href="{{ url_for('note',note_id=i.id) }}"> {{i.title}} </a>
 </h3>
+<h5>
+  <a href="{{url_for('delete_note',note_id=i.id)}}">удалить заметку</a>
+</h5>
 {% endfor %}
 {% endblock %}
 
