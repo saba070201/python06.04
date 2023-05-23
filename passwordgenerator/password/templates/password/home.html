@@ -1,0 +1,45 @@
+{% extends 'password/base.html' %}
+{% block content %}
+<main role="main">
+  <section class="jumbotron text-center mt-5">
+  <div class="container">
+    <h2>Генератор паролей</h2>
+   </div>  
+  </section>
+  <section class="jumbotron text-center mt-5">
+    <div class="container">
+      <form action="" method="get">
+        <select class="form-select mt-5" aria-label="Длина пароля" name="lenght" >
+
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
+        <div class="form-check mt-5 ">
+          <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" name="Big" >
+          <label class="form-check-label" for="flexCheckDefault">
+           Заглавные буквы
+          </label>
+        </div>
+        <div class="form-check mt-5">
+          <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" name="Special">
+          <label class="form-check-label" for="flexCheckDefault">
+            Спецсимволы 
+          </label>
+        </div>
+        <div class="form-check mt-5 ">
+          <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" name="Numbers">
+          <label class="form-check-label" for="flexCheckDefault">
+            Цифры
+          </label>
+        </div>
+        <button type="submit"  class="btn btn-light mt-5">Сгенерировать пароль</button>
+      </form>
+     </div>  
+    </section>
+    <section class="jumbotron text-center mt-5">
+      <h2> {{ result }} </h2>
+    </section>
+</main>
+
+{% endblock %}
