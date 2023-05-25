@@ -7,6 +7,21 @@
   <title>Document</title>
 </head>
 <body>
-  home
+  {% for i in articles %}
+  <h2>
+    <a href="{% url 'articleapp:view_art' i.id %}">
+      {{ i.title }}
+    </a>
+   
+  </h2>
+  <h3>
+    {{ i.prememo }} 
+  </h3>
+  {% if i.image %}
+  <img src="  {{ i.image.url }} " alt="" >
+
+
+  {% endif %}
+  {% endfor %}
 </body>
 </html>
