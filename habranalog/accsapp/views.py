@@ -7,30 +7,38 @@ from django.contrib.auth.decorators import login_required
 
 
 def signup(request):
-    if request.method=='GET':
-      return render(request,'accsapp/signup.html',{'form':UserCreationForm()})
+    if request.user.is_authenticated:
+      return redirect('articleapp:home')
     else:
-       if request.POST['password1']==request.POST['password2']:
-          try:
-              user=User.objects.create_user(username=request.POST['username'],password=request.POST['password1'])
-              user.save()
-              login(request, user)
-              return redirect('articleapp:home')
-          except IntegrityError:
-              return render(request,'accsapp/signup.html',{'form':UserCreationForm(),'error':'такой пользователь уже существует'})
-       else:
-          return render(request,'accsapp/signup.html',{'form':UserCreationForm(),'error':'пароли не совпадают'})
-       
+      if request.method=='GET':
+        return render(request,'accsapp/signup.html',{'form':UserCreationForm()})
+      else:
+        if request.POST['password1']==request.POST['password2']:
+            try:
+                user=User.objects.create_user(username=request.POST['username'],password=request.POST['password1'])
+                user.save()
+                login(request, user)
+                return redirect('articleapp:home')
+            except IntegrityError:
+                return render(request,'accsapp/signup.html',{'form':UserCreationForm(),'error':'такой пользователь уже существует'})
+        else:
+            return render(request,'accsapp/signup.html',{'form':UserCreationForm(),'error':'пароли не совпадают'})
+        
 
 def signin(request):
-    if request.method=='GET':
-      return render(request,'accsapp/signin.html',{'form':AuthenticationForm()})
+    if request.user.is_authenticated:
+       return redirect('articleapp:home')
     else:
-      user=authenticate(request,username=request.POST['username'],password=request.POST['password'])
-      if user is None:
-        return render(request,'accsapp/signin.html',{'form':AuthenticationForm(),'error':'такого пользователя не существует'})
+      if request.method=='GET':
+        return render(request,'accsapp/signin.html',{'form':AuthenticationForm()})
       else:
-        return redirect('articleapp:home')
+        user=authenticate(request,username=request.POST['username'],password=request.POST['password'])
+        if user is None:
+          return render(request,'accsapp/signin.html',{'form':AuthenticationForm(),'error':'такого пользователя не существует'})
+        else:
+          login(request,user)
+          return redirect('articleapp:home')
+  
       
 
 @login_required
