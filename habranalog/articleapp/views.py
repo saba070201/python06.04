@@ -45,3 +45,11 @@ def view_article(request,art_id): # переименовать view_art
     article_=get_object_or_404(Article,pk=art_id,author=request.user)
     articleblocks=ArticlesBlock.objects.filter(article=art_id)
     return render(request,'articleapp/view_article.html',{'article':article_,'articleblocks':articleblocks}) 
+
+@login_required
+def delete_article(request,art_id):
+    article=get_object_or_404(Article,pk=art_id,author=request.user)
+    if request.method=='POST':
+        article.published=False
+        article.save()
+        return redirect('articleapp:home')

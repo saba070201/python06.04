@@ -28,4 +28,8 @@
     </p>
     <input type="submit" value="создать">
   </form>
+  <form action="{% url 'articleapp:delete_article' article.id  %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="удалить"> 
+  </form>
 <small> {{ error }}</small>
