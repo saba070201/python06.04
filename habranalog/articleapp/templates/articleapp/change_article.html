@@ -26,7 +26,7 @@
         
       
     </p>
-    <input type="submit" value="создать">
+    <input type="submit" value="изменить">
   </form>
   <form action="{% url 'articleapp:delete_article' article.id  %}" method="POST">
     {% csrf_token %}

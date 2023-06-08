@@ -36,8 +36,8 @@
      
       </ul>
       {% if user.is_authenticated %}
- 
-        вы зарегестрированы как {{ user.username }}
+      <a class="nav-link" href="{% url 'accsapp:profile' %}">   {{ user.username }}</a>
+     
   
     
       <form class="form-inline my-2 my-lg-0" action="{% url 'accsapp:signout' %}">

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
-
+from articleapp.models import * 
 
 def signup(request):
     if request.user.is_authenticated:
@@ -46,4 +46,10 @@ def signout(request):
   
     logout(request)
     return redirect('articleapp:home') 
-# Create your views here.
+
+
+@login_required 
+def profile(request):
+  publicart=Article.objects.filter(author=request.user,published=True)
+  privateart=Article.objects.filter(author=request.user,published=False)
+  return render(request,'accsapp/profile.html',context={'publicart':publicart,'privateart':privateart})

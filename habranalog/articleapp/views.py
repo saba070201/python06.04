@@ -3,13 +3,28 @@ from articleapp.models import *
 from django.contrib.auth.decorators import login_required
 from articleapp.forms import * 
 def home(request):
-    data=Article.objects.filter(published=True)
-    return render(request,'articleapp/home.html',{'articles':data})
+    user_filter_state=request.session.get('user_filter_state','up')
+    data=Article.objects.filter(published=True).all().order_by('date_published')
+    if request.GET.get('sort_by')=='up':
+        request.session['user_filter_state']='up'
+        user_filter_state=request.session['user_filter_state']
+        data=Article.objects.filter(published=True).all().order_by('date_published')
+    elif request.GET.get('sort_by')=='down':
+        request.session['user_filter_state']='down'
+        user_filter_state= request.session['user_filter_state']
+        data=Article.objects.filter(published=True).all().order_by('-date_published')
+    return render(request,'articleapp/home.html',{'articles':data,'user_filter_state':user_filter_state})
 
 
 def view_art(request,art_id):
+    viewscount=Views.objects.filter(article=art_id).count()
     data=get_object_or_404(Article,pk=art_id,published=True)
-    return render(request,'articleapp/view_art.html',{'article':data})
+    try:
+        v=Views.objects.create(user=request.user,article=data)
+    except:
+        pass
+    blocks=ArticlesBlock.objects.filter(article=art_id)
+    return render(request,'articleapp/view_art.html',{'article':data,'blocks':blocks,'viewscount':viewscount})
 
 
 @login_required
